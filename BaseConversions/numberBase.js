@@ -55,17 +55,18 @@ function ShowUp (strInp, strButton) { // creates an input and a button
     d.appendChild(button)   
 }
 
+let d1 = window.document.getElementById('div4')
+
 function presentation (corresp, result, start, from, destiny) { // Shows the results
-    var p1 = document.createElement('p')
-    p1.innerHTML = corresp + `<strong>${result}</strong>`
-    d.appendChild(p1)
+    d.appendChild(d1)    
     var p2 = document.createElement('p')
-    var p3 = document.createElement('div')
+    var p3 = document.createElement('div')    
     p2.innerHTML = 'Therefore:'
     p3.innerHTML = `${start} <strong>${from}</strong> = ${result} <strong>${destiny}</strong>`    
-    p3Style(p3) // modifications  
-    d.appendChild(p2)
-    d.appendChild(p3)
+    p3Style(p3) // modifications    
+    d1.innerHTML = corresp + `<strong>${result}</strong>`  
+    d1.appendChild(p2)
+    d1.appendChild(p3)
 }
 
 /* ======================================= CONVERT FUNCTIONS ========================================= */
