@@ -50,49 +50,20 @@ var sentBin = 'Enter a number in <strong>binary</strong> base: '
 var sentOct = 'Enter a number in <strong>octal</strong> base: '
 var sentHex = 'Enter a number in <strong>hexadecimal</strong> base: '
 
-function ShowUp (strInp, strButton) { // creates an input and a button       
-    var inp = document.createElement('input')
-    inp.setAttribute('id', 'i1')
-    d.innerHTML = strInp    
-    inputStyle(inp) // tentemos modifications  
-    d.appendChild(inp)
-    var button = document.createElement('button')
-    button.setAttribute('onclick', strButton)
-    button.innerHTML = 'Convert'
-    buttonStyle(button) // modifications
-    d.appendChild(button)    
-    var butSwitch = document.createElement('button') // switch button
-
-    let a1 = ['convertDecBin()', 'convertDecOct()', 'convertDecHex()', 'convertBinOct()', 'convertBinHex()']
-    let a2 = ['convertBinDec()', 'convertOctDec()', 'convertHexDec()', 'convertOctBin()', 'convertHexBin()']
-
-    let b1 = [sentDec, sentDec, sentDec, sentBin, sentBin]
-    let b2 = [sentBin, sentOct, sentHex, sentOct, sentHex]
-    
-    var cont = 0
-    for (var i = 0; i < 5; i++) {
-        if (strButton == a1[i]) {
-            OppStrButton = a2[i]
-            OppStrInp = b2[i]
-            cont++
-        }
-    }
-    if (cont == 0) {
-        for (var i = 0; i < 5; i++) {
-            if (strButton == a2[i]) {
-                OppStrButton = a1[i]
-                OppStrInp = b1[i]
-            }                
-        }
-    }
-
-    butSwitch.setAttribute('onclick', 'ShowUpOp()')
-    butSwitch.innerHTML = '\u{1F504}'
-    butSwitchStyle(butSwitch) // modifications
-    d.appendChild(butSwitch)
+function ShowUp (strInp, strButton) { // creates an input and a button
+    OppStrButton = strButton
+    OppStrInp = strInp   
+    ShowUpOp()
 }
 
 function ShowUpOp () {
+    inputAndButton()
+    var butSwitch = document.createElement('button') // switch button
+    decides()
+    doButSwitch(butSwitch)
+}
+
+function inputAndButton () {
     var inp = document.createElement('input')
     inp.setAttribute('id', 'i1')
     d.innerHTML = OppStrInp    
@@ -103,15 +74,15 @@ function ShowUpOp () {
     button.innerHTML = 'Convert'
     buttonStyle(button) // modifications
     d.appendChild(button)
+}
 
-    var butSwitch = document.createElement('button') // switch button
-
+function decides () {
     let a1 = ['convertDecBin()', 'convertDecOct()', 'convertDecHex()', 'convertBinOct()', 'convertBinHex()']
     let a2 = ['convertBinDec()', 'convertOctDec()', 'convertHexDec()', 'convertOctBin()', 'convertHexBin()']
 
     let b1 = [sentDec, sentDec, sentDec, sentBin, sentBin]
     let b2 = [sentBin, sentOct, sentHex, sentOct, sentHex]
-    
+
     var cont = 0
     for (var i = 0; i < 5; i++) {
         if (OppStrButton == a1[i]) {
@@ -128,7 +99,9 @@ function ShowUpOp () {
             }                
         }
     }
+}
 
+function doButSwitch (butSwitch) {
     butSwitch.setAttribute('onclick', 'ShowUpOp()')
     butSwitch.innerHTML = '\u{1F504}'
     butSwitchStyle(butSwitch) // modifications
@@ -228,19 +201,24 @@ function convertHexBin () { // presentation Hexadecimal_Binary
 /* ====================================== CONVERSION FUNCTIONS ======================================= */
 
 function conversionDecBin (dec) { // Decimal_Binary
-    var prot = []
-    while (dec != 0) {
-        prot.push(dec % 2)
-        dec = parseInt(dec/2)        
-    }
     var bin = []
-    let tam = prot.length
-    let auxTam = tam
-    for (var i = 0; i < auxTam; i++) {
-        bin[i] = prot[tam - 1]
-        tam--
-    }
-    return bin 
+    if (dec == 0) {
+       bin.push('0')
+       return bin 
+    } else { 
+        var prot = []
+        while (dec != 0) {
+            prot.push(dec % 2)
+            dec = parseInt(dec/2)        
+        }        
+        let tam = prot.length
+        let auxTam = tam
+        for (var i = 0; i < auxTam; i++) {
+            bin[i] = prot[tam - 1]
+            tam--
+        }
+        return bin 
+    } 
 }
 
 function conversionBinDec (bin) { // Binary_Decimal
@@ -255,19 +233,24 @@ function conversionBinDec (bin) { // Binary_Decimal
 }
 
 function conversionDecOct (dec) { // Decimal_Octal
-    var prot = []
-    while (dec != 0) {
-        prot.push(dec % 8)
-        dec = parseInt(dec/8)
-    }
     var oct = []
-    let tam = prot.length
-    let auxTam = tam
-    for (var i = 0; i < auxTam; i++) {
-        oct[i] = prot[tam - 1]
-        tam--
+    if (dec == 0) {
+        oct.push('0')
+        return oct
+    } else {
+        var prot = []
+        while (dec != 0) {
+            prot.push(dec % 8)
+            dec = parseInt(dec/8)
+        }    
+        let tam = prot.length
+        let auxTam = tam
+        for (var i = 0; i < auxTam; i++) {
+            oct[i] = prot[tam - 1]
+            tam--
+        }
+        return oct
     }
-    return oct
 }
 
 function conversionOctDec (oct) { // Octal_Decimal
@@ -282,35 +265,40 @@ function conversionOctDec (oct) { // Octal_Decimal
 }
 
 function conversionDecHex (dec) { // Decimal_Hexadecimal
-    var prot = []
-    while (dec != 0) {
-        prot.push(dec % 16)
-        dec = parseInt(dec/16)
-    }
     var protHex = []
-    let tam = prot.length
-    let auxTam = tam
-    for (var i = 0; i < auxTam; i++) {
-        protHex[i] = prot[tam - 1]
-        tam--
-    }
-    
-    let HexNumbers = [10, 11, 12, 13, 14, 15]
-    let HexLetters = ['a', 'b', 'c', 'd', 'e', 'f']
-
-    for (var i = 0; i < auxTam; i++) {
-        for (var j = 0; j < 6; j++) {
-            if (protHex[i] == HexNumbers[j]) {
-               protHex[i] = HexLetters[j]
-                break 
-            }                
+    if (dec == 0) {
+        protHex.push('0')
+        return protHex
+    } else {
+        var prot = []
+        while (dec != 0) {
+            prot.push(dec % 16)
+            dec = parseInt(dec/16)
+        }    
+        let tam = prot.length
+        let auxTam = tam
+        for (var i = 0; i < auxTam; i++) {
+            protHex[i] = prot[tam - 1]
+            tam--
         }
-    }
+        
+        let HexNumbers = [10, 11, 12, 13, 14, 15]
+        let HexLetters = ['a', 'b', 'c', 'd', 'e', 'f']
 
-    return protHex
+        for (var i = 0; i < auxTam; i++) {
+            for (var j = 0; j < 6; j++) {
+                if (protHex[i] == HexNumbers[j]) {
+                protHex[i] = HexLetters[j]
+                    break 
+                }                
+            }
+        }
+
+        return protHex
+    }
 }
 
-function conversionHexDec (hex) { // Hexadecimal_Decimal
+function conversionHexDec (hex) { // Hexadecimal_Decimal    
     let tam = hex.length
     var auxTam = tam
     var prot = []
