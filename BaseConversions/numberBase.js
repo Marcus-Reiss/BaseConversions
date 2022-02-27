@@ -42,6 +42,14 @@ function out (bt) {
 
 let d = window.document.getElementById('div3')
 
+let OppStrButton = ''
+let OppStrInp = ''
+
+var sentDec = 'Enter a number in <strong>decimal</strong> base: '
+var sentBin = 'Enter a number in <strong>binary</strong> base: '
+var sentOct = 'Enter a number in <strong>octal</strong> base: '
+var sentHex = 'Enter a number in <strong>hexadecimal</strong> base: '
+
 function ShowUp (strInp, strButton) { // creates an input and a button       
     var inp = document.createElement('input')
     inp.setAttribute('id', 'i1')
@@ -52,7 +60,79 @@ function ShowUp (strInp, strButton) { // creates an input and a button
     button.setAttribute('onclick', strButton)
     button.innerHTML = 'Convert'
     buttonStyle(button) // modifications
-    d.appendChild(button)   
+    d.appendChild(button)    
+    var butSwitch = document.createElement('button') // switch button
+
+    let a1 = ['convertDecBin()', 'convertDecOct()', 'convertDecHex()', 'convertBinOct()', 'convertBinHex()']
+    let a2 = ['convertBinDec()', 'convertOctDec()', 'convertHexDec()', 'convertOctBin()', 'convertHexBin()']
+
+    let b1 = [sentDec, sentDec, sentDec, sentBin, sentBin]
+    let b2 = [sentBin, sentOct, sentHex, sentOct, sentHex]
+    
+    var cont = 0
+    for (var i = 0; i < 5; i++) {
+        if (strButton == a1[i]) {
+            OppStrButton = a2[i]
+            OppStrInp = b2[i]
+            cont++
+        }
+    }
+    if (cont == 0) {
+        for (var i = 0; i < 5; i++) {
+            if (strButton == a2[i]) {
+                OppStrButton = a1[i]
+                OppStrInp = b1[i]
+            }                
+        }
+    }
+
+    butSwitch.setAttribute('onclick', 'ShowUpOp()')
+    butSwitch.innerHTML = '\u{1F504}'
+    butSwitchStyle(butSwitch) // modifications
+    d.appendChild(butSwitch)
+}
+
+function ShowUpOp () {
+    var inp = document.createElement('input')
+    inp.setAttribute('id', 'i1')
+    d.innerHTML = OppStrInp    
+    inputStyle(inp) // tentemos modifications  
+    d.appendChild(inp)
+    var button = document.createElement('button')
+    button.setAttribute('onclick', OppStrButton)
+    button.innerHTML = 'Convert'
+    buttonStyle(button) // modifications
+    d.appendChild(button)
+
+    var butSwitch = document.createElement('button') // switch button
+
+    let a1 = ['convertDecBin()', 'convertDecOct()', 'convertDecHex()', 'convertBinOct()', 'convertBinHex()']
+    let a2 = ['convertBinDec()', 'convertOctDec()', 'convertHexDec()', 'convertOctBin()', 'convertHexBin()']
+
+    let b1 = [sentDec, sentDec, sentDec, sentBin, sentBin]
+    let b2 = [sentBin, sentOct, sentHex, sentOct, sentHex]
+    
+    var cont = 0
+    for (var i = 0; i < 5; i++) {
+        if (OppStrButton == a1[i]) {
+            OppStrButton = a2[i]
+            OppStrInp = b2[i]
+            cont++
+        }
+    }
+    if (cont == 0) {
+        for (var i = 0; i < 5; i++) {
+            if (OppStrButton == a2[i]) {
+                OppStrButton = a1[i]
+                OppStrInp = b1[i]
+            }                
+        }
+    }
+
+    butSwitch.setAttribute('onclick', 'ShowUpOp()')
+    butSwitch.innerHTML = '\u{1F504}'
+    butSwitchStyle(butSwitch) // modifications
+    d.appendChild(butSwitch)
 }
 
 let d1 = window.document.getElementById('div4')
@@ -71,7 +151,7 @@ function presentation (corresp, result, start, from, destiny) { // Shows the res
 
 /* ======================================= CONVERT FUNCTIONS ========================================= */
 
-function convertDecBin () { // presentation - Decimal_Binary
+function convertDecBin () { // presentation - Decimal_Binary   
     let n = window.document.getElementById("i1")
     let dec = Number(n.value)
     let bin = conversionDecBin(dec)
@@ -319,4 +399,19 @@ function p3Style (p3) {
     p3.style.borderStyle = "solid"
     p3.style.borderRadius = "20px"
     p3.style.borderWidth = "2px"
+}
+
+function butSwitchStyle (b) {
+    b.style.padding = "1px"
+    b.style.paddingBottom = "4px"
+    b.style.paddingTop = "0px"
+    b.style.height = "50px"
+    b.style.width = "50px"
+    b.style.background = "white"
+    b.style.borderRadius = "25px"
+    b.style.fontSize = "25px"
+    b.style.borderStyle = "solid"
+    b.style.borderColor = "red"
+    b.style.borderWidth = "3px"
+    b.style.marginLeft = "5px"
 }
